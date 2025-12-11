@@ -77,7 +77,7 @@ export default {
               </small>
             </div>
 
-            <label for="email" class="input-label">Email</label>
+            <label for="email" class="input-label">Your Email</label>
             <input type="email" id="email" placeholder="example@dnsc.edu.ph" name="email" v-model="email">
 
             <label for="password" class="input-label">Password</label>
