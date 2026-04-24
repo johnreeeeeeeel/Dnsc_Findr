@@ -1,59 +1,60 @@
-How to Run the System
+## Changelogs
 
-This does not have 'vendor' and 'node\_modules'
+## v1.0.2
+### Improvements
+- Fixed .env file
+- Added default users for demonstration
 
-Disable antivirus and run this commands one by one to install 'vendor' and 'node\_modules':
+## v1.0.1
+### Improvements
+- Fixed some bugs
+
+## v1.0.0
+### Initial Release
+- Initial release
+
+
+## How to Run the System
+
+- This does not have 'vendor' and 'node\_modules'
+- Disable antivirus and run this commands one by one to install 'vendor' and 'node\_modules':
 
 > composer install
 > npm install
 
-Run this commands one by one to deploy project:
-
-// Make sure that xampp is running
+- Start XAMPP and run this commands one by one to deploy project:
 
 > npm run build
 > npm run dev
 > php artisan migrate
 > php artisan serve
 
-Default Users
+## Default Users (Don't Change the Password)
 
-(Admin) 
+### Admin
+> Email: osds@dnsc.edu.ph
+> Temp Password: DF9476-1668TMP
 
-Email: osds@dnsc.edu.ph
+### Instructor
+> Email: getalla.joviet@dnsc.edu.ph
+> Temp Password: DF2655-1146TMP
 
-Temp Pass: DF9476-1668TMP
+### Staff
+> Email: bulayog.jason@dnsc.edu.ph
+> Temp Password: DF3680-7941TMP
 
-(Instructor)
+### Student
+> Email: malbino.febyjohnrel@dnscedu.onmicrosoft.com
+> Temp Password: DF3934-6737TMP
 
-Email: getalla.joviet@dnsc.edu.ph
+## Credits
+- Developed and designed by: 
+    - Feby Johnrel R. Malbino
+    - Joviet B. Getalla
+    - Jason L. Bulay-og
+- Built using HTML, CSS, JavaScript, PHP(Laravel), Vue, Bootstrap
+- Icons provided by Icones and Font Awesome
 
-Temp Pass: DF2826-8495TMP
-
-(Staff)
-
-Email: grande.hanny@dnsc.edu.ph
-
-Temp Pass: DF4639-9406TMP
-
-(Student)
-
-Email: malbino.febyjohnrel@dnscedu.onmicrosoft.com
-
-Temp Pass: DF3923-5751TMP
-
-
-Libraries/Frameworks Used
-
-Icones (For Icons)
-
-Submitted by:
-
-Feby Johnrel Malbino
-Nazeh Jane Cuabo
-Joviet Getalla
-Jason Bulay-og
-
-GitHub Repository
-https://github.com/johnreeeeeeeel/Dnsc_Findr.git
+## GitHub Repository
+- https://github.com/johnreeeeeeeel/Dnsc_Findr.git
 
