@@ -19,33 +19,33 @@
 - This does not have 'vendor' and 'node\_modules'
 - Disable antivirus and run this commands one by one to install 'vendor' and 'node\_modules':
 
-> composer install
-> npm install
+`> composer install`
+`> npm install`
 
 - Start XAMPP and run this commands one by one to deploy project:
 
-> npm run build
-> npm run dev
-> php artisan migrate
-> php artisan serve
+`> npm run build`
+`> npm run dev`
+`> php artisan migrate`
+`> php artisan serve`
 
 ## Default Users (Don't Change the Password)
 
 ### Admin
-> Email: osds@dnsc.edu.ph
-> Temp Password: DF9476-1668TMP
+`> Email: osds@dnsc.edu.ph`
+`> Temp Password: DF9476-1668TMP`
 
 ### Instructor
-> Email: getalla.joviet@dnsc.edu.ph
-> Temp Password: DF2655-1146TMP
+`> Email: getalla.joviet@dnsc.edu.ph`
+`>> Temp Password: DF2655-1146TMP`
 
 ### Staff
-> Email: bulayog.jason@dnsc.edu.ph
-> Temp Password: DF3680-7941TMP
+`> Email: bulayog.jason@dnsc.edu.ph`
+`> Temp Password: DF3680-7941TMP`
 
 ### Student
-> Email: malbino.febyjohnrel@dnscedu.onmicrosoft.com
-> Temp Password: DF3934-6737TMP
+`> Email: malbino.febyjohnrel@dnscedu.onmicrosoft.com`
+`> Temp Password: DF3934-6737TMP`
 
 ## Credits
 - Developed and designed by: 
