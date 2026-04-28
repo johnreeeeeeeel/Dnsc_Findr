@@ -1,0 +1,232 @@
+* {
+  font-family: "Outfit", sans-serif;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background-color: #f2f3f7;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../images/dnsc-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+body #links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+body #links div:nth-child(1) {
+  margin-top: 10px;
+}
+
+body #links div:nth-child(1) p {
+  font-size: 14px;
+  color: #9c9c9c;
+  font-weight: 700;
+  margin: 0;
+}
+
+body #links div:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+body #links div:nth-child(2) a {
+  font-size: 14px;
+  text-decoration: none;
+  color: #9c9c9c;
+  margin: 0;
+  cursor: pointer;
+}
+
+body #links div:nth-child(2) a:hover {
+  text-decoration: underline;
+}
+
+/* Login */
+.auth-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-width: 50%;
+  min-height: 60%;
+  border-radius: 18px;
+  background-color: #f2f3f7;
+  
+}
+
+.auth-container .left {
+  background-color: #f2f3f7;
+  min-width: 50%;
+  min-height: 100%;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .auth-container .left {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .auth-container .left {
+    display: none;
+  }
+}
+
+.auth-container .left img {
+  width: 200px;
+}
+
+.auth-container .right {
+  background-color: #282829;
+  min-width: 50%;
+  min-height: 100%;
+  border-radius: 16px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    background-color: transparent !important;
+  }
+  .auth-container .right {
+    width: 360px;
+  }
+}
+
+.auth-container .right img {
+  width: 235px;
+}
+
+.auth-container .right .auth-form {
+  margin-top: 18px;
+}
+
+.auth-container .right .auth-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.auth-container .right .auth-form form .login-essential {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-container .right .auth-form form .login-essential div:nth-child(1) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-container .right .auth-form form .login-essential div:nth-child(1)>label {
+  color: #f2f2f2;
+  font-size: 0.9rem;
+}
+
+.auth-container .right .auth-form form .login-essential div:nth-child(2)>a {
+  color: rgb(255, 85, 85);
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.auth-container .right .auth-form form .login-essential div:nth-child(2)>a:hover {
+  color: rgb(255, 33, 33);
+}
+
+.auth-container .right .auth-form .login-error {
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Reset password modal */
+#lostPasswordModal .modal-content {
+    background-color: #f2f3f7;
+    color: #282829;
+    border: none;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#lostPasswordModal .modal-content .modal-header,
+#lostPasswordModal .modal-content .modal-body,
+#lostPasswordModal .modal-content .modal-footer {
+    border: none;
+    background-color: transparent !important;
+    padding: 0;
+}
+
+#lostPasswordModal .modal-content .modal-header .btn-close,
+#lostPasswordModal .modal-content .modal-header .btn-close:focus,
+#lostPasswordModal .modal-content .modal-header .btn-close:active,
+#lostPasswordModal .modal-content .modal-header .btn-close:hover {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+#lostPasswordModal .modal-content .modal-header .modal-title {
+    color: #48c441;
+    text-transform: uppercase;
+}
+
+#lostPasswordModal .modal-content .modal-body form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#lostPasswordModal .modal-content .modal-body form .action-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+#lostPasswordModal .modal-content .modal-body form .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#lostPasswordModal .modal-content .modal-body form .field-group label {
+    color: #666;
+    font-weight: 400;
+}
+
