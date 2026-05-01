@@ -1,5 +1,5 @@
-## DNSC Findr
-DNSC Findr has 2 major versions, extended and revamped. Extended uses Laravel framework and revamped does not.
+## Butang Findr
+Butang Findr has 2 major versions, extended and revamped. Extended uses Laravel framework and revamped does not.
 
 
 ## Changelogs
@@ -64,5 +64,5 @@ DNSC Findr has 2 major versions, extended and revamped. Extended uses Laravel fr
 - Icons provided by Icones and Font Awesome
 
 ## GitHub Repository
-- https://github.com/johnreeeeeeeel/dnsc_findr.git
+- https://github.com/johnreeeeeeeel/butang_findr.git
 
