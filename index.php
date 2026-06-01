@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="spinner-grow"></div>
     </div>
 
-    <!-- Show reset password message -->
+    <!-- Alert messege -->
     <?php if (isset($_SESSION['alert_message'])): ?>
         <div class="alert alert-<?= $_SESSION['alert_message']['type'] ?> alert-dismissible fade show" id="messageAlert">
             <?= $_SESSION['alert_message']['text'] ?>
@@ -177,15 +177,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!-- Js -->
 <script src="assets/js/script.js"></script>
-
-<script>
-    setTimeout(() => {
-        const alertBox = document.getElementById("messageAlert");
-
-        if (alertBox) {
-            alertBox.remove();
-        }
-    }, 4500);
-</script>
 
 </html>

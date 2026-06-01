@@ -57,9 +57,20 @@ $username = $_SESSION['username'] ?? '';
 </head>
 
 <body class="container-fluid">
+    <!-- Loading screen -->
     <div id="loadingScreen" class="loading-screen d-none">
         <div class="spinner-grow"></div>
     </div>
+    
+    <!-- Alert messege -->
+    <?php if (isset($_SESSION['alert_message'])): ?>
+        <div class="alert alert-<?= $_SESSION['alert_message']['type'] ?> alert-dismissible fade show" id="messageAlert">
+            <?= $_SESSION['alert_message']['text'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <?php unset($_SESSION['alert_message']); ?>
+    <?php endif; ?>
 
     <!-- Mobile Sidebar -->
     <div class="offcanvas offcanvas-start" id="sidebarMobile">
@@ -221,15 +232,6 @@ $username = $_SESSION['username'] ?? '';
 
         <div class="tab-content">
             <div class="tab-pane fade show active" id="changePassword">
-                <?php if (isset($_SESSION['password_message'])): ?>
-                    <div class="alert alert-dismissible fade show" id="passwordAlert">
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        <?= $_SESSION['password_message'] ?>
-                    </div>
-
-                    <?php unset($_SESSION['password_message']); ?>
-                <?php endif; ?>
-
                 <form method="POST" action="../app/change_update_password.php">
                     <h2>
                         <i class="fa-solid fa-key"></i>

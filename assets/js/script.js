@@ -15,10 +15,18 @@ document.querySelectorAll("form").forEach(form => {
 
 window.addEventListener("load", hideLoading);
 
-// Fix back/forward cache issue
 window.addEventListener("pageshow", function (event) {
     hideLoading();
 });
+
+// Alert message timout
+setTimeout(() => {
+    const alertBox = document.getElementById("messageAlert");
+
+    if (alertBox) {
+        alertBox.remove();
+    }
+}, 4500);
 
 // Remove focus when modal closes
 document.addEventListener('hide.bs.modal', function (e) {
@@ -34,18 +42,13 @@ function setTitle(el) {
     document.querySelector(".page-title").textContent = el.dataset.title;
 }
 
-
-
-
-
-// Display admin/user details in modal
+// View user details
 function viewUserDetails(
     id,
     username,
     fullname,
     sex,
     dob,
-    usertype,
     userrole,
     institute,
     program,
@@ -56,21 +59,46 @@ function viewUserDetails(
     document.getElementById('vu_fullname').innerText = fullname;
     document.getElementById('vu_sex').innerText = sex;
     document.getElementById('vu_dob').innerText = dob;
-    document.getElementById('vu_usertype').innerText = usertype;
     document.getElementById('vu_userrole').innerText = userrole;
     document.getElementById('vu_institute').innerText = institute;
     document.getElementById('vu_program').innerText = program;
     document.getElementById('vu_email').innerText = email;
 }
 
-function viewAdminDetails(
+// Edit user details
+function updateUserDetails(
     id,
-    username,
-    email,
-    usertype
+    firstname,
+    lastname,
+    middlename,
+    sex,
+    dob,
+    usertype,
+    userrole,
+    institute,
+    program,
+    email
 ) {
-    document.getElementById('va_id').innerText = id;
-    document.getElementById('va_username').innerText = username;
-    document.getElementById('va_email').innerText = email;
-    document.getElementById('va_usertype').innerText = usertype;
+    document.getElementById('eu_id').value = id;
+
+    document.getElementById('eu_firstname').value = firstname;
+    document.getElementById('eu_lastname').value = lastname;
+    document.getElementById('eu_middlename').value = middlename ?? '';
+
+    document.getElementById('eu_sex').value = sex;
+    document.getElementById('eu_dob').value = dob;
+
+    document.getElementById('eu_usertype').value = usertype;
+    document.getElementById('eu_userrole').value = userrole ?? '';
+    document.getElementById('eu_institute').value = institute ?? '';
+    document.getElementById('eu_program').value = program ?? '';
+
+    document.getElementById('eu_email').value = email;
+}
+
+// Delete user 
+function setDeleteUser(
+    id
+) {
+    document.getElementById('du_id').value = id;
 }

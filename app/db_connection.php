@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db   = "dnsc_findr_db";
+$db   = "butang_findr_db";
 
 $conn = new mysqli($host, $user, $pass, $db);
 

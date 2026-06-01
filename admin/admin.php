@@ -23,6 +23,14 @@ $institute = $_SESSION['institute'] ?? '';
 $program = $_SESSION['program'] ?? '';
 
 $username = $_SESSION['username'] ?? '';
+
+// Add user
+$institute = $conn->query("SELECT id, description FROM institute");
+$program = $conn->query("SELECT id, description FROM program");
+
+// Update user
+$instituteUpdate = $conn->query("SELECT id, description FROM institute");
+$programUpdate = $conn->query("SELECT id, description FROM program");
 ?>
 
 <!DOCTYPE html>
@@ -61,6 +69,16 @@ $username = $_SESSION['username'] ?? '';
     <div id="loadingScreen" class="loading-screen d-none">
         <div class="spinner-grow"></div>
     </div>
+    
+    <!-- Alert messege -->
+    <?php if (isset($_SESSION['alert_message'])): ?>
+        <div class="alert alert-<?= $_SESSION['alert_message']['type'] ?> alert-dismissible fade show" id="messageAlert">
+            <?= $_SESSION['alert_message']['text'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <?php unset($_SESSION['alert_message']); ?>
+    <?php endif; ?>
     
     <!-- Mobile Sidebar -->
     <div class="offcanvas offcanvas-start" id="sidebarMobile">
@@ -251,6 +269,14 @@ $username = $_SESSION['username'] ?? '';
             </div>
 
             <div class="tab-pane fade" id="users">
+
+                <div class="header">
+                    <div class="search-container">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" name="search" id="searchUser">
+                    </div>
+                </div>
+
                 <!-- Users table -->
                 <div class="table-container">
                     <h2>
@@ -258,7 +284,7 @@ $username = $_SESSION['username'] ?? '';
                         <button class="sm-btn secondary-btn" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="fa-solid fa-user-plus"></i>Add User</button>
                     </h2>
                     
-                    <table class="table table-hover table-borderless">
+                    <table class="table table-borderless">
                         <thead>
                             <th>ID</th>
                             <th>Username</th>
@@ -278,64 +304,57 @@ $username = $_SESSION['username'] ?? '';
                                     <td data-label="Fullname"><?= $row['fullname']; ?></td>
                                     <td data-label="Email"><?= $row['email']; ?></td>
                                     <td data-label="Action">
-                                        <button type="button" class="sm-btn primary-btn" data-bs-toggle="modal" data-bs-target="#viewUserModal" 
-                                            onclick="viewUserDetails(
-                                                '<?= $row['id'] ?>', 
-                                                '<?= $row['username'] ?>', 
-                                                '<?= $row['fullname'] ?>', 
-                                                '<?= $row['sex'] ?>', 
-                                                '<?= $row['dob'] ?>', 
-                                                '<?= $row['usertype'] ?>', 
-                                                '<?= $row['userrole'] ?>', 
-                                                '<?= $row['institute'] ?>', 
-                                                '<?= $row['program'] ?>', 
-                                                '<?= $row['email'] ?>'
-                                            )">
-                                            <i class="fa-solid fa-eye"></i>
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                </div>
+                                        <div class="action-buttons">
+                                            <button type="button" class="sm-btn primary-btn" data-bs-toggle="modal" data-bs-target="#viewUserModal" 
+                                                onclick="viewUserDetails(
+                                                    '<?= $row['id'] ?>', 
+                                                    '<?= $row['username'] ?>', 
+                                                    '<?= $row['fullname'] ?>', 
+                                                    '<?= $row['sex'] ?>', 
+                                                    '<?= $row['dob'] ?>', 
+                                                    '<?= $row['userrole'] ?>', 
+                                                    '<?= $row['institute'] ?>', 
+                                                    '<?= $row['program'] ?>', 
+                                                    '<?= $row['email'] ?>'
+                                                )">
+                                                <i class="fa-solid fa-eye"></i>
+                                                View
+                                            </button>
 
-                <!-- Admins table -->
-                <div class="table-container">
-                    <h2>
-                        <span>Admins</span>
-                        <button class="sm-btn secondary-btn" data-bs-toggle="modal" data-bs-target="#addAdminModal"><i class="fa-solid fa-user-plus"></i>Add Admin</button>
-                    </h2>
-                    
-                    <table class="table table-hover table-borderless">
-                        <thead>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            <?php
-                                $result = $conn->query("SELECT * FROM view_admins");
-                            ?>
+                                            <button 
+                                                type="button" 
+                                                class="sm-btn primary-btn"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#updateUserModal"
+                                                onclick="updateUserDetails(
+                                                    '<?= $row['id'] ?>',
+                                                    '<?= $row['firstname'] ?>',
+                                                    '<?= $row['lastname'] ?>',
+                                                    '<?= $row['middlename'] ?>',
+                                                    '<?= $row['sex'] ?>',
+                                                    '<?= $row['dob'] ?>',
+                                                    '<?= $row['usertype_id'] ?>',
+                                                    '<?= $row['userrole_id'] ?>',
+                                                    '<?= $row['institute_id'] ?>',
+                                                    '<?= $row['program_id'] ?>',
+                                                    '<?= $row['email'] ?>'
+                                                )"
+                                            >
+                                                <i class="fa-solid fa-user-pen"></i>
+                                                Update
+                                            </button>
 
-                            <?php while ($row = $result->fetch_assoc()): ?>
-                                <tr>
-                                    <td data-label="ID"><?= $row['id']; ?></td>
-                                    <td data-label="Username"><?= $row['username']; ?></td>
-                                    <td data-label="Email"><?= $row['email']; ?></td>
-                                    <td data-label="Action">
-                                        <button type="button" class="sm-btn primary-btn" data-bs-toggle="modal" data-bs-target="#viewAdminModal" 
-                                            onclick="viewAdminDetails(
-                                                '<?= $row['id'] ?>', 
-                                                '<?= $row['username'] ?>', 
-                                                '<?= $row['email'] ?>',
-                                                '<?= $row['usertype'] ?>'
-                                            )">
-                                            <i class="fa-solid fa-eye"></i>
-                                            View
-                                        </button>
+                                            <button 
+                                                type="button" 
+                                                class="sm-btn primary-btn"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#deleteUserModal"
+                                                onclick="setDeleteUser('<?= $row['id'] ?>')"
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                                Delete
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -344,83 +363,7 @@ $username = $_SESSION['username'] ?? '';
                 </div>
             </div>
 
-            <!-- View user details modal -->
-            <div class="modal fade" id="viewUserModal" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="profile-container">
-                                <i class="fa-solid fa-circle-user"></i>
-                                <p>
-                                    <span id="vu_fullname"></span>
-                                    <span class="badge rounded-pill" id="vu_usertype"></span>
-                                    <span class="badge rounded-pill" id="vu_userrole"></span>
-                                </p>
-                                <p>
-                                    <code>
-                                        <b>ID: </b><span id="vu_id"></span>
-                                        |
-                                        <b>Email: </b><span id="vu_email"></span>
-                                    </code>
-                                </p>
-                            </div>
-
-                            <p><strong>Username:</strong> <span id="vu_username"></span></p>
-
-                            <p><strong>Sex:</strong> <span id="vu_sex"></span></p>
-                            <p><strong>Date of Birth:</strong> <span id="vu_dob"></span></p>
-
-                            <p><strong>Institute:</strong> <span id="vu_institute"></span></p>
-                            <p><strong>Program:</strong> <span id="vu_program"></span></p>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- View admin details modal -->
-            <div class="modal fade" id="viewAdminModal" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="profile-container">
-                                <i class="fa-solid fa-circle-user"></i>
-                                <p>
-                                    <span id="va_username"></span>
-                                    <span class="badge rounded-pill" id="va_usertype"></span>
-                                </p>
-                                <p>
-                                    <code>
-                                        <b>ID: </b><span id="va_id"></span>
-                                        |
-                                        <b>Email: </b><span id="va_email"></span>
-                                    </code>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <?php
-                require '../app/db_connection.php';
-
-                // Institutes
-                $institutes = $conn->query("SELECT id, description FROM institute");
-
-                // Programs
-                $programs = $conn->query("SELECT id, description FROM program");
-            ?>
-
-            <!-- Add User Modal -->
+             <!-- Add User Modal -->
             <div class="modal fade" id="addUserModal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -469,7 +412,7 @@ $username = $_SESSION['username'] ?? '';
                                     <label>Academic Information</label>
                                     <select name="institute" class="form-control">
                                         <option value="">Select Institute</option>
-                                        <?php while ($row = $institutes->fetch_assoc()) { ?>
+                                        <?php while ($row = $institute->fetch_assoc()) { ?>
                                             <option value="<?= $row['id'] ?>">
                                                 <?= $row['description'] ?>
                                             </option>
@@ -478,7 +421,7 @@ $username = $_SESSION['username'] ?? '';
                                     
                                     <select name="program" class="form-control">
                                         <option value="">Select Program</option>
-                                        <?php while ($row = $programs->fetch_assoc()) { ?>
+                                        <?php while ($row = $program->fetch_assoc()) { ?>
                                             <option value="<?= $row['id'] ?>">
                                                 <?= $row['description'] ?>
                                             </option>
@@ -505,37 +448,81 @@ $username = $_SESSION['username'] ?? '';
                 </div>
             </div>
 
-            <!-- Add Admin Modal -->
-            <div class="modal fade" id="addAdminModal" tabindex="-1">
+            <!-- Update user details modal -->
+            <div class="modal fade" id="updateUserModal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
+
                         <div class="modal-header">
                             <h4 class="modal-title">
-                                <i class="fa-solid fa-user-tie"></i>
-                                Add Admin
+                                <i class="fa-solid fa-user-pen"></i>
+                                Update User
                             </h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
                         <div class="modal-body">
-                            <form method="POST" action="../app/add_admin.php">
+                            <form method="POST" action="../app/update_user.php">
+                                <input type="hidden" name="id" id="eu_id">
+
                                 <div class="field-group">
                                     <label>User Type</label>
-                                    <select name="userType" class="form-control" required>
-                                        <option value="1" selected>Admin</option>
+                                    <select name="userType" id="eu_usertype" class="form-control">
+                                        <option value="2">User</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="field-group">
+                                    <label>User Role</label>
+                                    <select name="userRole" id="eu_userrole" class="form-control">
+                                        <option value="">Select Role</option>
+                                        <option value="1">Instructor</option>
+                                        <option value="2">Staff</option>
+                                        <option value="3">Student</option>
+                                    </select>
+                                </div>
+
+                                <div class="field-group">
+                                    <label>Personal Information</label>
+                                    <input type="text" name="firstname" id="eu_firstname" class="form-control" placeholder="First Name" required>
+                                    <input type="text" name="middlename" id="eu_middlename" class="form-control" placeholder="Middle Name">
+                                    <input type="text" name="lastname" id="eu_lastname" class="form-control" placeholder="Last Name" required>
+
+                                    <select name="sex" id="eu_sex" class="form-control">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                    <input type="date" name="dob" id="eu_dob" class="form-control">
+                                </div>
+
+                                <div class="field-group">
+                                    <label>Academic Information</label>
+                                    <select name="institute" id="eu_institute" class="form-control">
+                                        <option value="">Select Institute</option>
+                                        <?php while ($row = $instituteUpdate->fetch_assoc()) { ?>
+                                            <option value="<?= $row['id'] ?>">
+                                                <?= $row['description'] ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+
+                                    <select name="program" id="eu_program" class="form-control">
+                                        <option value="">Select Program</option>
+                                        <?php while ($row = $programUpdate->fetch_assoc()) { ?>
+                                            <option value="<?= $row['id'] ?>">
+                                                <?= $row['description'] ?>
+                                            </option>
+                                        <?php } ?>
                                     </select>
                                 </div>
 
                                 <div class="field-group">
                                     <label>Account Information</label>
-                                    <input type="text" name="username" class="form-control" placeholder="Username" required>
-                                    <input type="email" name="email" class="form-control" placeholder="Email" required>
-                                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                    <input type="email" name="email" id="eu_email" class="form-control" required>
                                 </div>
 
                                 <div class="action-buttons">
                                     <button type="submit" class="btn primary-btn">
-                                        Save
+                                        Update
                                     </button>
                                     <button type="button" class="btn secondary-btn" data-bs-dismiss="modal">
                                         Cancel
@@ -547,47 +534,92 @@ $username = $_SESSION['username'] ?? '';
                 </div>
             </div>
 
-            <!-- Success account creation modal -->
-            <?php $createdUser = $_SESSION['created_user_admin'] ?? null; ?>
-            <div class="modal fade successModal" id="accountCreationSuccessModal" tabindex="-1">
+            <!-- View user details modal -->
+            <div class="modal fade" id="viewUserModal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
-
                         <div class="modal-header">
-                            <h3 class="modal-title">
-                                <i class="fa-solid fa-circle-check"></i>
-                                Success
-                            </h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
                         <div class="modal-body">
-                            <h5>Account Details</h5>
+                            <div class="profile-container">
+                                <div class="profile">
+                                    <div class="profile-icon">
+                                        <i class="fa-solid fa-circle-user"></i>
+                                        <span class="badge rounded-pill" id="vu_userrole"></span>
+                                    </div>
+                                    <h5><span id="vu_fullname"></span></h5>
+                                </div>
+                                
+                                
+                                <div class="profile-section">
+                                    <h6>Personal Information</h6>
+                                    <p>
+                                        <small><b>User ID: </b><span id="vu_id"></span></small>
+                                        <small><b>Username: </b><span id="vu_username"></span></small>
+                                    </p>
+                                    <p>
+                                        <small><b>Sex: </b><span id="vu_sex"></span></small>
+                                        <small><b>Data of Birth: </b><span id="vu_dob"></span></small>
+                                    </p>
+                                </div>
 
-                            <p><strong>Username:</strong> <?= htmlspecialchars($createdUser['username'] ?? '') ?></p>
-                            <p><strong>Email:</strong> <?= htmlspecialchars($createdUser['email'] ?? '') ?></p>
-                            <p><strong>Password:</strong> <?= htmlspecialchars($createdUser['password'] ?? '') ?></p>
+                                <div class="profile-section">
+                                    <h6>Academic Information</h6>
+                                    <p>
+                                        <small><b>Institute: </b><span id="vu_institute"></span></small>
+                                        <small><b>Program: </b><span id="vu_program"></span></small>
+                                    </p>
+                                </div>
 
-                            <button class="btn primary-btn" data-bs-dismiss="modal">
-                                Okay
-                            </button>
+                                <div class="profile-section">
+                                    <h6>Account Information</h6>
+                                    <p>
+                                        <small><b>Email: </b><span id="vu_email"></span></small>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete user modal -->
+            <div class="modal fade confirmation-modal" id="deleteUserModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">
+                                <i class="fa-solid fa-trash"></i>
+                                Delete User
+                            </h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <form method="POST" action="../app/delete_user.php">
+                                <input type="hidden" name="id" id="du_id">
+
+                                <p>Are you sure you want to delete this user?</p>
+
+                                <div class="action-buttons">
+                                    <button type="submit" class="btn primary-btn">
+                                        Yes, Delete
+                                    </button>
+                                    <button type="button" class="btn secondary-btn" data-bs-dismiss="modal">
+                                        No
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Show success account creation -->
-    <?php if (isset($_SESSION['created_user_admin'])): ?>
-        <script>
-            window.addEventListener('DOMContentLoaded', function () {
-                var modal = new bootstrap.Modal(document.getElementById('accountCreationSuccessModal'));
-                modal.show();
-            });
-        </script>
-    <?php unset($_SESSION['created_user_admin']); ?>
-    <?php endif; ?>
 </body>
 
 <!-- Js -->

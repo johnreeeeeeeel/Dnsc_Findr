@@ -16,7 +16,11 @@ $confirm = $_POST['confirm_password'];
 $message = '';
 
 if ($new !== $confirm) {
-    $message = 'Passwords do not match';
+    // Alert message
+    $_SESSION['alert_message'] = [
+        'type' => 'danger',
+        'text' => 'Password do not match.'
+    ];
 } else {
 
     $stmt = $conn->prepare("SELECT password FROM users WHERE id = ?");
@@ -31,16 +35,20 @@ if ($new !== $confirm) {
         $update = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
         $update->bind_param("si", $hashed, $userId);
 
-        $message = $update->execute()
-            ? 'Password updated successfully'
-            : 'Update failed';
+        // Alert message
+        $_SESSION['alert_message'] = [
+            'type' => 'success',
+            'text' => 'Password updated successfully!'
+        ];
 
     } else {
-        $message = 'Incorrect current password';
+        // Alert message
+        $_SESSION['alert_message'] = [
+            'type' => 'danger',
+            'text' => 'Incorrect current password.'
+        ];
     }
 }
-
-$_SESSION['password_message'] = $message;
 
 header("Location: ../user/settings.php");
 exit();
